@@ -69,4 +69,8 @@ if [ -z "${DISTRO}" ] ; then
 fi
 
 cp tests/${DISTRO}/Dockerfile .
-docker build --rm=true . && touch INSTALL_SUCCESS
+docker build --rm=true --tag="puppet" . && touch INSTALL_SUCCESS
+docker run puppet-test puppet apply -e "file {'/tmp/foo': ensure => present, content => 'foo' }" && touch PUPPET_SUCCESS
+docker run puppet-test puppet module install puppetlabs/stdlib && touch PUPPET_MODULE_SUCCESS
+docker run puppet-test puppet resource host && touch PUPPET_RESOURCE_SUCCESS
+docker run puppet facter && touch FACTER_SUCCESS

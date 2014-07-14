@@ -12,6 +12,10 @@ script:
 - ./linux quiet mem=2G rootfstype=hostfs rw eth0=slirp,,/usr/bin/slirp-fullbolt init=$(pwd)/uml.sh
   WORKDIR=$(pwd) HOME=$HOME DISTRO=$DISTRO
 - bash -c '[ -a INSTALL_SUCCESS ]'
+- bash -c '[ -a PUPPET_SUCCESS ]'
+- bash -c '[ -a PUPPET_MODULE_SUCCESS ]'
+- bash -c '[ -a PUPPET_RESOURCE_SUCCESS ]'
+- bash -c '[ -a FACTER_SUCCESS ]'
 - curl -Lo travis_after_all.py https://raw.github.com/dmakhno/travis_after_all/master/travis_after_all.py
 env:
   matrix:
