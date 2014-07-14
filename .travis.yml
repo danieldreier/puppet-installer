@@ -12,6 +12,7 @@ script:
 - ./linux quiet mem=2G rootfstype=hostfs rw eth0=slirp,,/usr/bin/slirp-fullbolt init=$(pwd)/uml.sh
   WORKDIR=$(pwd) HOME=$HOME DISTRO=$DISTRO
 - bash -c '[ -a INSTALL_SUCCESS ]'
+- curl -Lo travis_after_all.py https://raw.github.com/dmakhno/travis_after_all/master/travis_after_all.py
 env:
   matrix:
   - DISTRO="arch"
@@ -22,6 +23,30 @@ env:
   - DISTRO="fedora20"
   - DISTRO="ubuntu1204"
   - DISTRO="ubuntu1404"
+after_success:
+  - python travis_after_all.py
+  - export $(cat .to_export_back)
+  - |
+      if [ "$BUILD_LEADER" = "YES" ]; then
+        if [ "$BUILD_AGGREGATE_STATUS" = "others_succeeded" ]; then
+          echo "All Succeded! PUBLISHING..."
+        else
+          echo "Some Failed"
+        fi
+      fi
+after_failure:
+  - python travis_after_all.py
+  - export $(cat .to_export_back)
+  - |
+      if [ "$BUILD_LEADER" = "YES" ]; then
+        if [ "$BUILD_AGGREGATE_STATUS" = "others_failed" ]; then
+          echo "All Failed"
+        else
+          echo "Some Failed"
+        fi
+      fi
+after_script:
+  - echo leader=$BUILD_LEADER status=$BUILD_AGGREGATE_STATUS
 deploy:
   provider: s3
   access_key_id: AKIAJNTOF3YZQSOTDSVA
@@ -33,3 +58,4 @@ deploy:
   on:
     repo: danieldreier/puppet-installer
     branch: master
+    condition: $BUILD_LEADER = YES && $BUILD_AGGREGATE_STATUS = "others_succeeded"
