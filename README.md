@@ -24,14 +24,26 @@ The install script is tested on:
 - debian-wheezy
 - fedora20
 - ubuntu1204
+- ubuntu1310
 - ubuntu1404
+- ubuntu1410 (not supported, tests failing)
 
 Tests are run in a docker environment in travis ci with every commit. Please
 report any problems you encounter as issues on the projet's github issue tracker.
 
 
 ##Usage
-Usage is simple. You can run without parameters:
+The easiest (but least secure) way to run this script is:
+```
+curl getpuppet.whilefork.com | bash
+```
+
+There's no SSL on that, so you're running untrusted code. For better security, use the version on github:
+```
+curl https://raw.githubusercontent.com/danieldreier/puppet-installer/master/install_puppet.sh | bash
+```
+
+You can run without parameters:
 ```bash
 $ ./install_puppet.sh
 ```

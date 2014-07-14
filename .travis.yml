@@ -25,6 +25,9 @@ env:
   - DISTRO="ubuntu1204"
   - DISTRO="ubuntu1310"
   - DISTRO="ubuntu1404"
+  - DISTRO="ubuntu1410"
+  allow_failures:
+    - env: DISTRO="ubuntu1410"
 after_success:
 - python travis_after_all.py
 - export $(cat .to_export_back)
