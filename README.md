@@ -26,7 +26,6 @@ The install script is tested on:
 - ubuntu1204
 - ubuntu1310
 - ubuntu1404
-- ubuntu1410 (not supported, tests failing)
 
 Tests are run in a docker environment in travis ci with every commit. Please
 report any problems you encounter as issues on the projet's github issue tracker.
