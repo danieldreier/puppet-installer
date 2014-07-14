@@ -28,5 +28,8 @@ deploy:
   secret_access_key:
     secure: t55psMGNYGYwzlborJMkWo/kxXyHDM6vRfABQNo217VWSqqUdRXN0w5Bs2I29FWW+QaxNw+a15q6JMnblFFqi5zZRcHj2Zi61mjX21zcaCabA9d/yniKYRH3Fy4TEvBg1hf1MtTVDyqdZKrM+0jOb4dYkZeI8vAFjxw9u58/1RE=
   bucket: getpuppet.whilefork.com
+  endpoint: "getpuppet.whilefork.com.s3-website-us-west-2.amazonaws.com"
+  region: "us-west-2"
   on:
     repo: danieldreier/puppet-installer
+    branch: master
