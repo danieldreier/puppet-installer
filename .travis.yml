@@ -11,6 +11,7 @@ install:
 script:
 - ./linux quiet mem=2G rootfstype=hostfs rw eth0=slirp,,/usr/bin/slirp-fullbolt init=$(pwd)/uml.sh
   WORKDIR=$(pwd) HOME=$HOME DISTRO=$DISTRO
+- ls -la
 - bash -c '[ -a INSTALL_SUCCESS ]'
 - bash -c '[ -a PUPPET_SUCCESS ]'
 - bash -c '[ -a PUPPET_MODULE_SUCCESS ]'
