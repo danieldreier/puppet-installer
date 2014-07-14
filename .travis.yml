@@ -21,6 +21,7 @@ env:
   - DISTRO="debian-wheezy"
   - DISTRO="debian-squeeze"
   - DISTRO="fedora20"
+  - DISTRO="ubuntu1004"
   - DISTRO="ubuntu1204"
   - DISTRO="ubuntu1404"
 after_success:
@@ -48,14 +49,6 @@ after_failure:
 after_script:
 - echo leader=$BUILD_LEADER status=$BUILD_AGGREGATE_STATUS
 deploy:
-  - provider: releases
-    api_key:
-      secure: Ec6dUUNVTd3rU7RXdYVK13gUw8wCpjz2cwVnAWYjnWiFTC4OyV9SGKM2JG1yQsEfbLLoAhZ1/tRJP0VlvwqRlr82OACqoeTaBCZBPCn9pdW+QYf+4SK7iSMcrLeewlyd+DNZ65+2ox/cuRE7/2iOP33m+4fBXp7mk59bwSkq2s0=
-    file: install_puppet.sh
-    on:
-      repo: danieldreier/puppet-installer
-      branch: master
-      condition: $BUILD_LEADER = YES && $BUILD_AGGREGATE_STATUS = "others_succeeded"
   - provider: s3
     access_key_id: AKIAJNTOF3YZQSOTDSVA
     secret_access_key:
@@ -64,6 +57,16 @@ deploy:
     endpoint: "getpuppet.whilefork.com.s3-website-us-west-2.amazonaws.com"
     region: "us-west-2"
     on:
+      repo: danieldreier/puppet-installer
+      branch: master
+      condition: $BUILD_LEADER = YES && $BUILD_AGGREGATE_STATUS = "others_succeeded"
+  - provider: releases
+    api_key:
+      secure: Ec6dUUNVTd3rU7RXdYVK13gUw8wCpjz2cwVnAWYjnWiFTC4OyV9SGKM2JG1yQsEfbLLoAhZ1/tRJP0VlvwqRlr82OACqoeTaBCZBPCn9pdW+QYf+4SK7iSMcrLeewlyd+DNZ65+2ox/cuRE7/2iOP33m+4fBXp7mk59bwSkq2s0=
+    file: install_puppet.sh
+    on:
+      tags: true
+      all_branches: true
       repo: danieldreier/puppet-installer
       branch: master
       condition: $BUILD_LEADER = YES && $BUILD_AGGREGATE_STATUS = "others_succeeded"
