@@ -1,6 +1,5 @@
 Puppet Install Script
 =============================
-####Test Status
 [![Build Status](https://travis-ci.org/danieldreier/puppet-installer.svg?branch=master)](https://travis-ci.org/danieldreier/puppet-installer)
 
 ####Table of Contents
