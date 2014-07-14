@@ -23,6 +23,7 @@ env:
   - DISTRO="fedora20"
   - DISTRO="ubuntu1004"
   - DISTRO="ubuntu1204"
+  - DISTRO="ubuntu1310"
   - DISTRO="ubuntu1404"
 after_success:
 - python travis_after_all.py
