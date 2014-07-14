@@ -6,7 +6,7 @@ Puppet Install Script
 
 1. [Overview](#overview)
 4. [Usage](#usage)
-    * [What this module affects](#what-this-module-affects)
+    * [What this script affects](#what-this-module-affects)
 5. [Limitations - OS compatibility, etc.](#limitations)
 7. [Credits](#credits)
 
