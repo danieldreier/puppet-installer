@@ -1,5 +1,5 @@
 install:
-- sudo sh -c "wget -qO- https://get.docker.io/gpg | apt-key add -"
+- sudo sh -c "apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D"
 - sudo sh -c "echo deb http://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list"
 - sudo apt-get update
 - sudo mkdir -p /var/lib/docker
@@ -16,7 +16,8 @@ script:
 - bash -c '[ -a PUPPET_SUCCESS ]'
 - bash -c '[ -a PUPPET_RESOURCE_SUCCESS ]'
 - bash -c '[ -a FACTER_SUCCESS ]'
-- curl -Lo travis_after_all.py https://raw.github.com/dmakhno/travis_after_all/master/travis_after_all.py
+- curl -Lo travis_after_all.py https://raw.githubusercontent.com/dmakhno/travis_after_all/b7172bca92d6dcfcec2a0eacdf14eb5f3a1ad627/travis_after_all.py
+
 env:
   matrix:
   - DISTRO="arch"
