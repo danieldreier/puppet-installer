@@ -6,7 +6,7 @@ if [ -n "$1" ]; then
 fi
 
 require_root_access() {
-  if [[ $EUID -ne 0 ]]; then
+  if [ `id -u` -ne 0 ]; then
      echo "ERROR: This script requires root access"
      exit 1
   fi
@@ -55,6 +55,10 @@ ensure_package_present() {
       # Install Ruby (arch uses gem install of puppet)
       pacman -S --noconfirm --needed "$package"
       ;;
+    freebsd)
+      pkg update --quiet
+      pkg install -y --quiet "$package"
+      ;;
     *)
       echo "Unable to install \"$package\": unknown package management system"
       ;;
@@ -82,6 +86,8 @@ detect_os() {
     DistroBasedOn='Debian'
   elif [ -f /etc/arch-release ] ; then
     DistroBasedOn='Arch'
+  elif [ `uname` == 'FreeBSD' ] ; then
+    DistroBasedOn='FreeBSD'
   fi
   DistroBasedOn=$(lowercase $DistroBasedOn)
 
@@ -113,6 +119,9 @@ detect_os() {
     arch)
       # Arch is rolling release based so revision numbers don't apply
       DIST=$DistroBasedOn
+      ;;
+    freebsd)
+      PSUEDONAME=`freebsd-version`
       ;;
     *)
       ;;
@@ -219,6 +228,12 @@ ensure_puppet() {
       ensure_gem puppet
       ensure_gem facter
       ensure_group puppet
+
+      ;;
+    freebsd)
+      echo "$OS_DESCRIPTION"
+      echo "always installs latest version of puppet - version parameter ignored"
+      ensure_package_present puppet4
 
       ;;
     *)
